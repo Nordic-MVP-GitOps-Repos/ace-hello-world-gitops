@@ -75,7 +75,6 @@ spec:
           workspace: git-credentials
   workspaces:
     - name: source
-      optional: false
     - name: git-credentials
       optional: true
     - name: extra-ca
