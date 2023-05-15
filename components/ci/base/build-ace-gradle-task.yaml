@@ -28,29 +28,27 @@ spec:
         cp.icr.io/cp/appc/ace-server-prod:12.0.7.0-r4-20230222-094320@sha256:558e2d74fdd4ea291d56eab1360167294e3385defa7fe1f4701b27dbb6e6bba6
       name: build
       resources: {}
-      script: >
+      script: |
         #!/usr/bin/env bash
-
         export GRADLE_HOME=/home/aceuser/gradle-$(params.GRADLE_VERSION)
-
         export PATH=$PATH:$GRADLE_HOME/bin
-
         export GRADLE_ZIP=gradle-$(params.GRADLE_VERSION)-bin.zip
-
         cd /home/aceuser
-
-        curl -L https://services.gradle.org/distributions/${GRADLE_ZIP} -o
-        ${GRADLE_ZIP}
-
+        curl -L https://services.gradle.org/distributions/${GRADLE_ZIP} -o ${GRADLE_ZIP}
         unzip ${GRADLE_ZIP}
-
         rm ${GRADLE_ZIP}
-
-        echo $PATH
-
-        gradle --info --no-daemon -g /home/aceuser/.gradle -p /workspace/source
-        $(params.GRADLE_TASK)
+        if [ -f /workspace/extra-ca/ca.crt ]; then
+          echo "Importing extra CA"
+          openssl x509 -in /workspace/extra-ca/ca.crt -inform pem -out /tmp/ca.der -outform der
+          keytool -v -printcert -file /tmp/ca.der
+          keytool -importcert -alias extra-ca -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -file /tmp/ca.der
+          keytool -keystore "$JAVA_HOME/jre/lib/security/cacerts" -storepass changeit -list | grep extra-ca
+        fi
+        gradle --info --no-daemon -g /home/aceuser/.gradle -p /workspace/source $(params.GRADLE_TASK)
       workingDir: /workspace/source
   workspaces:
     - mountPath: /workspace/source
       name: source
+    - mountPath: /workspace/extra-ca
+      name: extra-ca
+      optional: true
