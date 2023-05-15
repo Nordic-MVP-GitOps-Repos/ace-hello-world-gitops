@@ -38,10 +38,12 @@ spec:
         export PATH=$PATH:$GRADLE_HOME/bin
         export GRADLE_ZIP=gradle-$(params.GRADLE_VERSION)-bin.zip
         mkdir -p $GRADLE_USER_HOME
-        cd $GRADLE_USER_HOME
-        curl -L https://services.gradle.org/distributions/${GRADLE_ZIP} -o ${GRADLE_ZIP}
-        unzip ${GRADLE_ZIP}
-        rm ${GRADLE_ZIP}
+        if [ ! -d $GRADLE_HOME ]; then
+          cd $GRADLE_USER_HOME
+          curl -L https://services.gradle.org/distributions/${GRADLE_ZIP} -o ${GRADLE_ZIP}
+          unzip ${GRADLE_ZIP}
+          rm ${GRADLE_ZIP}
+        fi
         if [ -f /workspace/extra-ca/ca.crt ]; then
           echo "Importing extra CA"
           openssl x509 -in /workspace/extra-ca/ca.crt -inform pem -out /tmp/ca.der -outform der
