@@ -47,8 +47,8 @@ spec:
         if [ -f /workspace/extra-ca/ca.crt ]; then
           echo "Importing extra CA"
           openssl x509 -in /workspace/extra-ca/ca.crt -inform pem -out /tmp/ca.der -outform der
-          keytool -v -printcert -file /tmp/ca.der
-          keytool -importcert -alias extra-ca -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -file /tmp/ca.der
+          # keytool -v -printcert -file /tmp/ca.der
+          keytool -importcert -noprompt -alias extra-ca -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -file /tmp/ca.der
           keytool -keystore "$JAVA_HOME/jre/lib/security/cacerts" -storepass changeit -list | grep extra-ca
           rm /tmp/ca.der
         fi
