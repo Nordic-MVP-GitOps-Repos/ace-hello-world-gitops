@@ -18,7 +18,7 @@ spec:
     - default: cp.icr.io/cp/appc/ace-server-prod@sha256:c41154c17a30bbbb6e1e4593c965f49ef3c86260e71143b8f33a6fbca277a3b9
       name: ACE_IMAGE
       type: string
-      description: App Connect image from here: https://www.ibm.com/docs/en/app-connect/containers_cd?topic=obtaining-app-connect-enterprise-server-image-from-cloud-container-registry. Defaults to 12.0.8.0-r1
+      description: 'App Connect image from here: https://www.ibm.com/docs/en/app-connect/containers_cd?topic=obtaining-app-connect-enterprise-server-image-from-cloud-container-registry. Defaults to 12.0.8.0-r1'
   steps:
     - env:
         - name: USERNAME
@@ -28,8 +28,7 @@ spec:
             secretKeyRef:
               key: token
               name: $(params.GITHUB_TOKEN_SECRET)
-      image: >-
-        $(params.ACE_IMAGE)
+      image: $(params.ACE_IMAGE)
       name: build
       resources: {}
       script: |
