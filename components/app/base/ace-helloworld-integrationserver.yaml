@@ -33,3 +33,5 @@ spec:
   createDashboardUsers: true
   version: 12.0.7.0-r2
   replicas: 1
+  configurations:
+    - debugger
