@@ -13,6 +13,26 @@ spec:
       name: gittokensecret
       type: string
   tasks:
+    - name: publish-bar-file
+      params:
+        - name: GIT_USER
+          value: $(params.gituser)
+        - name: GITHUB_TOKEN_SECRET
+          value: $(params.gittokensecret)
+        - name: GRADLE_TASK
+          value: 'publish'
+      runAfter:
+        - build-ace-gradle
+      taskRef:
+        kind: Task
+        name: build-ace-gradle
+      workspaces:
+        - name: source
+          workspace: source
+        - name: cache
+          workspace: gradle-cache
+        - name: extra-ca
+          workspace: extra-ca
     - name: build-ace-gradle
       params:
         - name: GIT_USER
