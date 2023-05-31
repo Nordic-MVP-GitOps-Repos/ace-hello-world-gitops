@@ -6,6 +6,7 @@ spec:
   params:
     - name: gitrepo
       type: string
+      default: https://github.com/Nordic-MVP-GitOps-Repos/ace-hello-world.git
     - name: gituser
       type: string
     - description: secret with github token in key token
