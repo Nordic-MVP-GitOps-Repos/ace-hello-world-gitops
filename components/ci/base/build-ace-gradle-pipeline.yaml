@@ -18,6 +18,8 @@ spec:
           value: $(params.gituser)
         - name: GITHUB_TOKEN_SECRET
           value: $(params.gittokensecret)
+        - name: GRADLE_TASK
+          value: 'packageApplication buildWithUnitTests runUnitTests'
       runAfter:
         - git-clone
       taskRef:
