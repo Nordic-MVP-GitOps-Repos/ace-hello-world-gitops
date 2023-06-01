@@ -9,6 +9,7 @@ spec:
       default: https://github.com/Nordic-MVP-GitOps-Repos/ace-hello-world.git
     - description: name of secret with username and token to use for publishing bar file
       name: artifactreposecretname
+      default: artifact-repo-authentication
       type: string
   tasks:
     - name: publish-bar-file
@@ -31,6 +32,8 @@ spec:
           workspace: extra-ca
     - name: build-ace-gradle
       params:
+        - name: ARTIFACT_REPO_SECRET_NAME
+          value: $(params.artifactreposecretname)
         - name: GRADLE_TASK
           value: 'packageApplication buildWithUnitTests runUnitTests'
       runAfter:
