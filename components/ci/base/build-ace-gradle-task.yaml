@@ -4,10 +4,8 @@ metadata:
   name: build-ace-gradle
 spec:
   params:
-    - name: GIT_USER
-      type: string
-    - description: secret with github token in key named token
-      name: GITHUB_TOKEN_SECRET
+    - description: Name of secret containing username and token for the repository to publish bar-files to
+      name: ARTIFACT_REPO_SECRET_NAME
       type: string
     - default: 7.5.1
       name: GRADLE_VERSION
@@ -22,12 +20,15 @@ spec:
   steps:
     - env:
         - name: USERNAME
-          value: $(params.GIT_USER)
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: $(params.ARTIFACT_REPO_SECRET_NAME)
         - name: TOKEN
           valueFrom:
             secretKeyRef:
               key: token
-              name: $(params.GITHUB_TOKEN_SECRET)
+              name: $(params.ARTIFACT_REPO_SECRET_NAME)
       image: $(params.ACE_IMAGE)
       name: build
       resources: {}

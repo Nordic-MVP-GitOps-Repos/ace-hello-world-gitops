@@ -7,18 +7,14 @@ spec:
     - name: gitrepo
       type: string
       default: https://github.com/Nordic-MVP-GitOps-Repos/ace-hello-world.git
-    - name: gituser
-      type: string
-    - description: secret with github token in key token
-      name: gittokensecret
+    - description: name of secret with username and token to use for publishing bar file
+      name: artifactreposecretname
       type: string
   tasks:
     - name: publish-bar-file
       params:
-        - name: GIT_USER
-          value: $(params.gituser)
-        - name: GITHUB_TOKEN_SECRET
-          value: $(params.gittokensecret)
+        - name: ARTIFACT_REPO_SECRET_NAME
+          value: $(params.artifactreposecretname)
         - name: GRADLE_TASK
           value: 'publish'
       runAfter:
@@ -35,10 +31,6 @@ spec:
           workspace: extra-ca
     - name: build-ace-gradle
       params:
-        - name: GIT_USER
-          value: $(params.gituser)
-        - name: GITHUB_TOKEN_SECRET
-          value: $(params.gittokensecret)
         - name: GRADLE_TASK
           value: 'packageApplication buildWithUnitTests runUnitTests'
       runAfter:
