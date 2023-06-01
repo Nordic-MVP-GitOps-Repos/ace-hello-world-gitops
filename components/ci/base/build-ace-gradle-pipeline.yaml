@@ -11,30 +11,12 @@ spec:
       name: artifactreposecretname
       type: string
   tasks:
-    - name: publish-bar-file
+    - name: build-barfile-test-and-publish
       params:
         - name: ARTIFACT_REPO_SECRET_NAME
           value: $(params.artifactreposecretname)
         - name: GRADLE_TASK
-          value: 'publish'
-      runAfter:
-        - build-ace-gradle
-      taskRef:
-        kind: Task
-        name: build-ace-gradle
-      workspaces:
-        - name: source
-          workspace: source
-        - name: cache
-          workspace: gradle-cache
-        - name: extra-ca
-          workspace: extra-ca
-    - name: build-ace-gradle
-      params:
-        - name: ARTIFACT_REPO_SECRET_NAME
-          value: $(params.artifactreposecretname)
-        - name: GRADLE_TASK
-          value: 'packageApplication buildWithUnitTests runUnitTests'
+          value: 'packageApplication buildWithUnitTests runUnitTests publish'
       runAfter:
         - git-clone
       taskRef:
