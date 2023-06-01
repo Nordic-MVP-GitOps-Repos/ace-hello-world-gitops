@@ -9,7 +9,6 @@ spec:
       default: https://github.com/Nordic-MVP-GitOps-Repos/ace-hello-world.git
     - description: name of secret with username and token to use for publishing bar file
       name: artifactreposecretname
-      default: artifact-repo-authentication
       type: string
   tasks:
     - name: publish-bar-file
