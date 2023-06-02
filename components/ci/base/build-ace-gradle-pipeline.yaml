@@ -148,7 +148,7 @@ spec:
           value: []
       workspaces:
         - name: source
-          workspace: ace-tekton-workspace
+          workspace: source
   workspaces:
     - name: source
     - name: git-credentials
