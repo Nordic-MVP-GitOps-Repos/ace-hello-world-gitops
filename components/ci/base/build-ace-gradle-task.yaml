@@ -58,14 +58,13 @@ spec:
           rm /tmp/ca.der
         fi
         gradle --info --no-daemon -Djavax.net.ssl.trustStore=$GRADLE_USER_HOME/cacerts -Djavax.net.ssl.trustStorePassword=changeit -g $GRADLE_USER_HOME/.gradle -p /workspace/source/application-code $(params.GRADLE_TASK)
+
+        if [$? -eq 0]; then    
+          gradle -q version | sed 's/[^ ]* //' | tee $(results.published-version.path)
+        fi
         
       workingDir: /workspace/source/application-code
-    - name: write-version
-      image: $(params.ACE_IMAGE)
-      workingDir: /workspace/source/application-code
-      script: |
-        #!/usr/bin/env bash
-        gradle -q version | sed 's/[^ ]* //' | tee $(results.published-version.path)
+       
   workspaces:
     - mountPath: /workspace/source
       name: source
