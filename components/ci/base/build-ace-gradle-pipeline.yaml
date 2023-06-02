@@ -121,7 +121,7 @@ spec:
           workspace: source
         - name: basic-auth
           workspace: git-credentials
-    - name: yq-update-image-in-deployment
+    - name: yq-update-bar-url-in-deployment
       taskRef:
         kind: Task
         name: yq
@@ -133,11 +133,11 @@ spec:
             
             export DEPLOYMENT_MANIFEST=gitops-code/components/app/base/ace-helloworld-integrationserver.yaml
             export PUBLISHED_VERSION=$(tasks.build-barfile-test-and-publish.results.published-version)
-            export BAR_URL = https://maven.pkg.github.com/Nordic-MVP-GitOps-Repos/ace-hello-world/com/ibm/ace/ace-hello-world/$PUBLISHED_VERSION/ace-hello-world-$PUBLISHED_VERSION.bar
+            export BAR_URL=https://maven.pkg.github.com/Nordic-MVP-GitOps-Repos/ace-hello-world/com/ibm/ace/ace-hello-world/$PUBLISHED_VERSION/ace-hello-world-$PUBLISHED_VERSION.bar
 
             echo Updating using barURL $BAR_URL
             
-            yq -i '.spec.barURL = "strenv(BAR_URL)"' $DEPLOYMENT_MANIFEST
+            yq -i '.spec.barURL=strenv(BAR_URL) $DEPLOYMENT_MANIFEST
             
             cat $DEPLOYMENT_MANIFEST
         - name: image
