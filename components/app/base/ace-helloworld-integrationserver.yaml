@@ -15,7 +15,6 @@ spec:
   pod:
     containers:
       runtime:
-        image: image-registry.openshift-image-registry.svc:5000/ace-hello-world/ace-hello-world:4f2ca0fd1f279e076e5d8d4e723a7a3f41c1fa7e
         resources:
           limits:
             cpu: 300m
@@ -31,6 +30,7 @@ spec:
     timeout: 120s
   designerFlowsOperationMode: disabled
   createDashboardUsers: true
-  version: 12.0.7.0-r2
+  version: 12.0
+  barURL: >-
+    https://github.com/Nordic-MVP-GitOps-Repos/ace-hello-world/raw/main/ace-hello-world.bar
   replicas: 1
-
