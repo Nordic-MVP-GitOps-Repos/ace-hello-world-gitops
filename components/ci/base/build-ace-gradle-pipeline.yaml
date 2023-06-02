@@ -121,6 +121,34 @@ spec:
           workspace: source
         - name: basic-auth
           workspace: git-credentials
+    - name: yq-update-image-in-deployment
+      taskRef:
+        kind: Task
+        name: yq
+      runAfter:
+        - build-barfile-test-and-publish
+      params:
+        - name: SCRIPT
+          value: |
+            
+            export DEPLOYMENT_MANIFEST=gitops-code/components/app/base/ace-helloworld-integrationserver.yaml
+            export PUBLISHED_VERSION=$(tasks.build-barfile-test-and-publish.results.published-version)
+
+            ls -lth $DEPLOYMENT_MANIFEST
+
+            echo Updating using revision $PUBLISHED_VERSION
+            
+            yq -i '.spec.pod.containers.runtime.image = "image-registry.openshift-image-registry.svc:5000/ace-hello-world/ace-hello-world:$PUBLISHED_VERSION"' $DEPLOYMENT_MANIFEST
+            
+            cat $DEPLOYMENT_MANIFEST
+        - name: image
+          value: >-
+            docker.io/mikefarah/yq:4.27.5@sha256:2be3626ed633fbe1fc33ee9343a1256a6be53334412b2251b9a859f8c145bb53
+        - name: files
+          value: []
+      workspaces:
+        - name: source
+          workspace: ace-tekton-workspace
   workspaces:
     - name: source
     - name: git-credentials
