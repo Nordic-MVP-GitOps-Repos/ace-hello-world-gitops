@@ -8,9 +8,6 @@ spec:
       type: string
       default: https://github.com/Nordic-MVP-GitOps-Repos/ace-hello-world.git
       description: git repo containing the application code
-    - description: name of secret with username and token to use for publishing bar file
-      name: artifactreposecretname
-      type: string
     - name: gitrepo-gitops-code
       type: string
       default: https://github.com/Nordic-MVP-GitOps-Repos/ace-hello-world-gitops.git
