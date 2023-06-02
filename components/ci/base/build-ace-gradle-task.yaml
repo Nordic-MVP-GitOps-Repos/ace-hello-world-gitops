@@ -61,7 +61,7 @@ spec:
         
         success=$?
 
-        if [success -ne 0]; then
+        if [$success -ne 0]; then
           exit 1
         fi
         gradle -q version | sed 's/[^ ]* //' | tee $(results.published-version.path)
