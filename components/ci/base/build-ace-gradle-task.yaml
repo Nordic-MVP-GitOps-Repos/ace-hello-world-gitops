@@ -3,6 +3,9 @@ kind: Task
 metadata:
   name: build-ace-gradle
 spec:
+  results:
+    - name: published-version
+      description: The version of the application that was published to the artifact repository
   params:
     - description: Name of secret containing username and token for the repository to publish bar-files to
       name: ARTIFACT_REPO_SECRET_NAME
@@ -55,7 +58,10 @@ spec:
           rm /tmp/ca.der
         fi
         gradle --info --no-daemon -Djavax.net.ssl.trustStore=$GRADLE_USER_HOME/cacerts -Djavax.net.ssl.trustStorePassword=changeit -g $GRADLE_USER_HOME/.gradle -p /workspace/source $(params.GRADLE_TASK)
-      workingDir: /workspace/source/application-code
+
+        gradle -q version | sed 's/[^ ]* //' | tee $(results.published-version)
+
+      workingDir: /workspace/source/application-code    
   workspaces:
     - mountPath: /workspace/source
       name: source
