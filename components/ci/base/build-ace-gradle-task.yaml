@@ -61,9 +61,8 @@ spec:
 
         if [$? -eq 0]; then    
           gradle -q version | sed 's/[^ ]* //' | tee $(results.published-version.path)
-          exit 1;
         fi
-
+        
       workingDir: /workspace/source/application-code
        
   workspaces:
