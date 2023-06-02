@@ -137,7 +137,7 @@ spec:
 
             echo Updating using barURL $BAR_URL
             
-            yq -i '.spec.barURL=strenv(BAR_URL) $DEPLOYMENT_MANIFEST
+            yq -i '.spec.barURL=strenv(BAR_URL)' $DEPLOYMENT_MANIFEST
             
             cat $DEPLOYMENT_MANIFEST
         - name: image
