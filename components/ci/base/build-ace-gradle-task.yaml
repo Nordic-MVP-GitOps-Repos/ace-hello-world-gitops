@@ -59,14 +59,13 @@ spec:
         fi
         gradle --info --no-daemon -Djavax.net.ssl.trustStore=$GRADLE_USER_HOME/cacerts -Djavax.net.ssl.trustStorePassword=changeit -g $GRADLE_USER_HOME/.gradle -p /workspace/source/application-code $(params.GRADLE_TASK)
         
-        success=$?
-
-        if [$success -ne 0]; then
-          exit 1;
-        fi
+      workingDir: /workspace/source/application-code
+    - name: write-version
+      image: $(params.ACE_IMAGE)
+      workingDir: /workspace/source/application-code
+      script: |
+        #!/usr/bin/env bash
         gradle -q version | sed 's/[^ ]* //' | tee $(results.published-version.path)
-
-      workingDir: /workspace/source/application-code    
   workspaces:
     - mountPath: /workspace/source
       name: source
