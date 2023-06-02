@@ -4,7 +4,7 @@ metadata:
   name: build-ace-gradle-pipeline
 spec:
   params:
-    - name: gitrepo
+    - name: gitrepo-application-code
       type: string
       default: https://github.com/Nordic-MVP-GitOps-Repos/ace-hello-world.git
     - description: name of secret with username and token to use for publishing bar file
@@ -29,10 +29,10 @@ spec:
           workspace: gradle-cache
         - name: extra-ca
           workspace: extra-ca
-    - name: git-clone
+    - name: git-clone-application-code
       params:
         - name: url
-          value: $(params.gitrepo)
+          value: $(params.gitrepo-application-code)
         - name: revision
           value: ''
         - name: refspec
@@ -46,7 +46,7 @@ spec:
         - name: crtFileName
           value: ca-bundle.crt
         - name: subdirectory
-          value: ''
+          value: 'application-code'
         - name: sparseCheckoutDirectories
           value: ''
         - name: deleteExisting
