@@ -6,4 +6,5 @@ resources:
   - ace-helloworld-integrationserver.yaml
   - certificate.yaml
   - self-signed-issuer.yaml
+  - package-credentials.yaml
   #- hpa.yaml

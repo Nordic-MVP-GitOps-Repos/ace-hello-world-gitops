@@ -33,4 +33,6 @@ spec:
   version: "12.0"
   barURL: >-
     https://maven.pkg.github.com/Nordic-MVP-GitOps-Repos/ace-hello-world/com/ibm/ace/ace-hello-world/0.0.0-bc23333b/ace-hello-world-0.0.0-bc23333b.bar
+  configurations:
+    - package-credentials
   replicas: 1
